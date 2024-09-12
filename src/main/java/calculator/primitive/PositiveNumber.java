@@ -1,5 +1,7 @@
 package calculator.primitive;
 
+import calculator.exception.ErrorCode;
+
 public class PositiveNumber {
     public static final int MIN_NUMBER = 0;
 
@@ -21,7 +23,7 @@ public class PositiveNumber {
     }
 
     private static void throwException() {
-        throw new RuntimeException("유효하지 않은 입력입니다.");
+        throw new RuntimeException(ErrorCode.invalidInputException());
     }
 
     public int getNumber() {
