@@ -16,13 +16,13 @@ public class StringAddCalculator {
     public static final int GROUP_INDEX_2 = 2;
 
     public static int splitAndSum(String text) {
-        if (isNulOrEmpty(text)) {
+        if (isNullOrEmpty(text)) {
             return ZERO;
         }
         return sumInput(convertStringToInteger(splitString(text)));
     }
 
-    private static boolean isNulOrEmpty(String text) {
+    private static boolean isNullOrEmpty(String text) {
         if (isNull(text)) {
             return true;
         }
