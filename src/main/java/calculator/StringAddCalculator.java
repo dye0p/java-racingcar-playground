@@ -1,5 +1,6 @@
 package calculator;
 
+import calculator.primitive.PositiveNumber;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -13,7 +14,6 @@ public class StringAddCalculator {
     public static final String SPLIT_PATTERN = "[,:]";
     public static final int GROUP_INDEX_1 = 1;
     public static final int GROUP_INDEX_2 = 2;
-    public static final int MIN_NUMBER = 0;
 
     public static int splitAndSum(String text) {
         if (isNulOrEmpty(text)) {
@@ -37,35 +37,20 @@ public class StringAddCalculator {
         return text == null;
     }
 
-    private static int sumInput(List<Integer> integers) {
+    private static int sumInput(List<PositiveNumber> integers) {
         return integers.stream()
-                .mapToInt(StringAddCalculator::validOutOfNumber)
+                .mapToInt(PositiveNumber::getNumber)
                 .sum();
     }
 
-    private static Integer validOutOfNumber(Integer index) {
-        outOfNumber(index);
-        return index;
-    }
-
-    private static void outOfNumber(Integer index) {
-        if (isOutOfNumber(index)) {
-            throwException();
-        }
-    }
-
-    private static boolean isOutOfNumber(Integer i) {
-        return i < MIN_NUMBER;
-    }
-
-    private static void throwException() {
-        throw new RuntimeException("유효하지 않은 입력 입니다.");
-    }
-
-    private static List<Integer> convertStringToInteger(String[] strings) {
+    private static List<PositiveNumber> convertStringToInteger(String[] strings) {
         return Arrays.stream(strings)
-                .map(Integer::parseInt)
+                .map(index -> PositiveNumber.create(parseInteger(index)))
                 .collect(Collectors.toList());
+    }
+
+    private static int parseInteger(String index) {
+        return Integer.parseInt(index);
     }
 
     private static String[] splitString(String text) {
