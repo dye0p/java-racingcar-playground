@@ -1,6 +1,7 @@
 package racingcar.view;
 
 import java.util.Scanner;
+import racingcar.exception.ErrorCode;
 
 public class InputView {
 
@@ -13,8 +14,23 @@ public class InputView {
 
     public int inputRacingCount() {
         Scanner sc = new Scanner(System.in);
+        int racingCount = 0;
 
-        System.out.println("시도할 회수는 몇회인가요?");
-        return sc.nextInt();
+        while (true) {
+            System.out.println("시도할 회수는 몇회인가요?");
+            racingCount = sc.nextInt();
+
+            try {
+                if (racingCount < 1) {
+                    throw new IllegalArgumentException(ErrorCode.INVALID_RACING_COUNT_MINIMUM.getMessage());
+                }
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return racingCount;
     }
+
+
 }
