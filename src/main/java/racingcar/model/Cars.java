@@ -26,9 +26,9 @@ public class Cars {
     }
 
     private void validateCarName(String[] carNames, HashSet<String> hashSet) {
-        for (String carName : carNames) {
-            checkAndThrowIfDuplicateCarName(carName, hashSet);
-        }
+        Arrays.stream(carNames)
+                .forEach(carName -> checkAndThrowIfDuplicateCarName(carName, hashSet));
+
     }
 
     private void checkAndThrowIfDuplicateCarName(String carName, HashSet<String> hashSet) {
