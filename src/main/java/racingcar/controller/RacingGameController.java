@@ -18,10 +18,30 @@ public class RacingGameController {
     }
 
     public void readyRacing() {
-        String[] carNames = inputView.inputCarNames();
-        int racingCount = inputView.inputRacingCount();
+        while (true) {
+            String[] carNames = inputView.inputCarNames();
+            int racingCount = inputView.inputRacingCount();
 
+            try {
+                createRacing(carNames, racingCount);
+                break;
+            } catch (IllegalArgumentException e) {
+                throwInputExeption(e);
+            }
+        }
+    }
+
+    private void createRacing(String[] carNames, int racingCount) {
         racing = Racing.create(carNames, racingCount);
+    }
+
+    private void throwInputExeption(IllegalArgumentException e) {
+        System.out.println(getExceptionMessage(e));
+        System.out.println();
+    }
+
+    private String getExceptionMessage(IllegalArgumentException e) {
+        return e.getMessage();
     }
 
     public void startRacing() {
