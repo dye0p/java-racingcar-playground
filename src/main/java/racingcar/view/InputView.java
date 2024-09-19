@@ -4,12 +4,21 @@ import java.util.Scanner;
 import racingcar.exception.ErrorCode;
 
 public class InputView {
+    private static final String REGEX = ",";
+    private static final String INPUT_CARS = "경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).";
+    private static final String INPUT_RACING_COUNTS = "시도할 회수는 몇회인가요?";
+    private static final int MIN_RACING_COUNT = 1;
 
-    public String inputCarNames() {
+
+    public String[] inputCarNames() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).");
-        return sc.nextLine();
+        System.out.println(INPUT_CARS);
+        return inputSplit(sc);
+    }
+
+    private String[] inputSplit(Scanner sc) {
+        return sc.nextLine().split(REGEX);
     }
 
     public int inputRacingCount() {
@@ -17,11 +26,11 @@ public class InputView {
         int racingCount = 0;
 
         while (true) {
-            System.out.println("시도할 회수는 몇회인가요?");
+            System.out.println(INPUT_RACING_COUNTS);
             racingCount = sc.nextInt();
 
             try {
-                if (racingCount < 1) {
+                if (racingCount < MIN_RACING_COUNT) {
                     throw new IllegalArgumentException(ErrorCode.INVALID_RACING_COUNT_MINIMUM.getMessage());
                 }
                 break;
@@ -31,6 +40,4 @@ public class InputView {
         }
         return racingCount;
     }
-
-
 }
