@@ -12,8 +12,33 @@ public class InputView {
     public String[] inputCarNames() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println(INPUT_CARS);
-        return inputSplit(sc);
+        String[] carNames;
+
+        while (true) {
+            System.out.println(INPUT_CARS);
+            try {
+                carNames = inputSplit(sc);
+
+                for (String carName : carNames) {
+                    if (isCarNameLength(carName)) {
+                        throwCarNameLengthExceedException();
+                    }
+                }
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+                System.out.println();
+            }
+        }
+        return carNames;
+    }
+
+    private void throwCarNameLengthExceedException() {
+        throw new IllegalArgumentException(ErrorCode.getCarNameLengthExceed());
+    }
+
+    private boolean isCarNameLength(String carName) {
+        return carName.length() > 5;
     }
 
     private String[] inputSplit(Scanner sc) {

@@ -1,7 +1,6 @@
 package racingcar.controller;
 
 import java.util.List;
-import racingcar.exception.ErrorCode;
 import racingcar.model.Car;
 import racingcar.model.Racing;
 import racingcar.view.InputView;
@@ -19,36 +18,10 @@ public class RacingGameController {
     }
 
     public void readyRacing() {
-        String[] carNames;
-        int racingCount;
+        String[] carNames = inputView.inputCarNames();
+        int racingCount = inputView.inputRacingCount();
 
-        while (true) {
-            try {
-                carNames = inputView.inputCarNames();
-
-                for (String carName : carNames) {
-                    if (isCarNameLength(carName)) {
-                        throwCarNameLengthExceedException();
-                    }
-                }
-
-                racingCount = inputView.inputRacingCount();
-
-                racing = new Racing(carNames, racingCount);
-                break;
-
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
-    private void throwCarNameLengthExceedException() {
-        throw new IllegalArgumentException(ErrorCode.getCarNameLengthExceed());
-    }
-
-    private boolean isCarNameLength(String carName) {
-        return carName.length() > 5;
+        racing = new Racing(carNames, racingCount);
     }
 
     public void startRacing() {
