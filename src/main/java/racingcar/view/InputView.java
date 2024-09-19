@@ -23,11 +23,15 @@ public class InputView {
                 validCarNames(carNames);
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-                System.out.println();
+                printCarNameExceptionMessage(e);
             }
         }
         return carNames;
+    }
+
+    private void printCarNameExceptionMessage(IllegalArgumentException e) {
+        System.out.println(e.getMessage());
+        System.out.println();
     }
 
     private void validCarNames(String[] carNames) {
@@ -65,14 +69,15 @@ public class InputView {
                 checkRacingCount(racingCount);
                 break;
             } catch (IllegalArgumentException exception) {
-                printExceptionMessage(exception);
+                printRacingCountExceptionMessage(exception);
             }
         }
         return racingCount;
     }
 
-    private void printExceptionMessage(IllegalArgumentException exception) {
+    private void printRacingCountExceptionMessage(IllegalArgumentException exception) {
         System.out.println(exception.getMessage());
+        System.out.println();
     }
 
     private void checkRacingCount(int racingCount) {
