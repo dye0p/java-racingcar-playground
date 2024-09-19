@@ -10,7 +10,11 @@ public enum ErrorCode {
         this.message = message;
     }
 
-    public String getMessage() {
-        return this.message;
+    public static String getCarNameLengthExceed() {
+        return CAR_NAME_LENGTH_EXCEEDED.message;
+    }
+
+    public static String getInvalidRacingCountMinimum() {
+        return INVALID_RACING_COUNT_MINIMUM.message;
     }
 }

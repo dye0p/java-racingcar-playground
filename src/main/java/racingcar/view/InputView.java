@@ -54,7 +54,7 @@ public class InputView {
     }
 
     private void throwInvalidRacingCountMinimumException() {
-        throw new IllegalArgumentException(ErrorCode.INVALID_RACING_COUNT_MINIMUM.getMessage());
+        throw new IllegalArgumentException(ErrorCode.getInvalidRacingCountMinimum());
     }
 
     private boolean isRacingCount(int racingCount) {
