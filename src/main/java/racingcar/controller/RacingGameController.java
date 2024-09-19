@@ -21,7 +21,7 @@ public class RacingGameController {
         String[] carNames = inputView.inputCarNames();
         int racingCount = inputView.inputRacingCount();
 
-        racing = new Racing(carNames, racingCount);
+        racing = Racing.create(carNames, racingCount);
     }
 
     public void startRacing() {

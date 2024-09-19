@@ -9,7 +9,7 @@ public class Racing {
     private List<Car> cars;
     private int racingCount;
 
-    public Racing(String[] carNames, int racingCount) {
+    protected Racing(String[] carNames, int racingCount) {
         this.cars = creatCarGroup(carNames);
         this.racingCount = racingCount;
     }
@@ -43,5 +43,9 @@ public class Racing {
     public List<Car> winner() {
         RacingJudge racingJudge = new RacingJudge();
         return racingJudge.findWinner(cars);
+    }
+
+    public static Racing create(String[] carNames, int racingCount) {
+        return new Racing(carNames, racingCount);
     }
 }
