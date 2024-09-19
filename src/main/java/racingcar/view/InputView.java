@@ -1,5 +1,6 @@
 package racingcar.view;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import racingcar.exception.ErrorCode;
 
@@ -18,12 +19,7 @@ public class InputView {
             System.out.println(INPUT_CARS);
             try {
                 carNames = inputSplit(sc);
-
-                for (String carName : carNames) {
-                    if (isCarNameLength(carName)) {
-                        throwCarNameLengthExceedException();
-                    }
-                }
+                validCarNames(carNames);
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -31,6 +27,12 @@ public class InputView {
             }
         }
         return carNames;
+    }
+
+    private void validCarNames(String[] carNames) {
+        Arrays.stream(carNames)
+                .filter(this::isCarNameLength)
+                .forEach(carName -> throwCarNameLengthExceedException());
     }
 
     private void throwCarNameLengthExceedException() {
