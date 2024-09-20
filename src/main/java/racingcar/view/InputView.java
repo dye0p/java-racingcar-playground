@@ -13,7 +13,6 @@ public class InputView {
 
     public String[] inputCarNames() {
         Scanner sc = new Scanner(System.in);
-
         String[] carNames;
 
         while (true) {
@@ -85,7 +84,7 @@ public class InputView {
     }
 
     private void checkRacingCount(int racingCount) {
-        if (!isRacingCount(racingCount)) {
+        if (isNotRacingCountValid(racingCount)) {
             throwInvalidRacingCountMinimumException();
         }
     }
@@ -94,7 +93,7 @@ public class InputView {
         throw new IllegalArgumentException(ErrorCode.getInvalidRacingCountMinimum());
     }
 
-    private boolean isRacingCount(int racingCount) {
-        return racingCount > MIN_RACING_COUNT;
+    private boolean isNotRacingCountValid(int racingCount) {
+        return racingCount < MIN_RACING_COUNT;
     }
 }

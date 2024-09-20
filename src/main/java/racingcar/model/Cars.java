@@ -22,22 +22,22 @@ public class Cars {
 
     private void validateDuplicateCarName(String[] carNames) {
         HashSet<String> hashSet = new HashSet<>();
-        validateCarName(carNames, hashSet);
+        checkForDuplicateCarNames(carNames, hashSet);
     }
 
-    private void validateCarName(String[] carNames, HashSet<String> hashSet) {
+    private void checkForDuplicateCarNames(String[] carNames, HashSet<String> hashSet) {
         Arrays.stream(carNames)
                 .forEach(carName -> checkAndThrowIfDuplicateCarName(carName, hashSet));
-
     }
 
     private void checkAndThrowIfDuplicateCarName(String carName, HashSet<String> hashSet) {
-        if (!isDuplicateCarName(carName, hashSet)) {
-            throwDuplicateCarNameException();
+        if (isNotDuplicateCarName(carName, hashSet)) {
+            return;
         }
+        throwDuplicateCarNameException();
     }
 
-    private boolean isDuplicateCarName(String carName, HashSet<String> hashSet) {
+    private boolean isNotDuplicateCarName(String carName, HashSet<String> hashSet) {
         return hashSet.add(carName);
     }
 
