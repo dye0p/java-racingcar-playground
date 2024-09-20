@@ -5,6 +5,7 @@ import java.util.Scanner;
 import racingcar.exception.ErrorCode;
 
 public class InputView {
+    private static final Scanner SCANNER = new Scanner(System.in);
     private static final String SPLIT_PATTERN = ",";
     private static final String INPUT_CARS = "경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).";
     private static final String INPUT_RACING_COUNTS = "시도할 회수는 몇회인가요?";
@@ -12,20 +13,42 @@ public class InputView {
     private static final int MAX_CARNAME_LENGTH = 5;
 
     public String[] inputCarNames() {
-        Scanner sc = new Scanner(System.in);
-        String[] carNames;
+        return inputCarNameAndValidateLengthName();
+    }
 
+    private String[] inputCarNameAndValidateLengthName() {
         while (true) {
-            System.out.println(INPUT_CARS);
+            String[] carNames = inputCarNamesByUser();
             try {
-                carNames = inputSplit(sc);
                 validCarNames(carNames);
-                break;
+                return carNames;
             } catch (IllegalArgumentException e) {
                 printCarNameExceptionMessage(e);
             }
         }
-        return carNames;
+    }
+
+    private String[] inputCarNamesByUser() {
+        System.out.println(INPUT_CARS);
+        return inputSplit();
+    }
+
+    private String[] inputSplit() {
+        return InputView.SCANNER.nextLine().split(SPLIT_PATTERN);
+    }
+
+    private void validCarNames(String[] carNames) {
+        Arrays.stream(carNames)
+                .filter(this::isCarNameLength)
+                .forEach(carName -> throwCarNameLengthExceedException());
+    }
+
+    private boolean isCarNameLength(String carName) {
+        return carName.length() > MAX_CARNAME_LENGTH;
+    }
+
+    private void throwCarNameLengthExceedException() {
+        throw new IllegalArgumentException(ErrorCode.getCarNameLengthExceed());
     }
 
     private void printCarNameExceptionMessage(IllegalArgumentException e) {
@@ -37,50 +60,25 @@ public class InputView {
         return e.getMessage();
     }
 
-    private void validCarNames(String[] carNames) {
-        Arrays.stream(carNames)
-                .filter(this::isCarNameLength)
-                .forEach(carName -> throwCarNameLengthExceedException());
-    }
-
-    private void throwCarNameLengthExceedException() {
-        throw new IllegalArgumentException(ErrorCode.getCarNameLengthExceed());
-    }
-
-    private boolean isCarNameLength(String carName) {
-        return carName.length() > MAX_CARNAME_LENGTH;
-    }
-
-    private String[] inputSplit(Scanner sc) {
-        return sc.nextLine().split(SPLIT_PATTERN);
-    }
-
     public int inputRacingCount() {
-        Scanner sc = new Scanner(System.in);
-
-        return inputAndValidateRacingCount(sc);
+        return inputAndValidateRacingCount();
     }
 
-    private int inputAndValidateRacingCount(Scanner sc) {
-        int racingCount;
-
+    private int inputAndValidateRacingCount() {
         while (true) {
-            System.out.println(INPUT_RACING_COUNTS);
-            racingCount = sc.nextInt();
-
+            int racingCount = inputRacingCountByUser();
             try {
                 checkRacingCount(racingCount);
-                break;
+                return racingCount;
             } catch (IllegalArgumentException exception) {
                 printRacingCountExceptionMessage(exception);
             }
         }
-        return racingCount;
     }
 
-    private void printRacingCountExceptionMessage(IllegalArgumentException exception) {
-        System.out.println(getExceptionMessage(exception));
-        System.out.println();
+    private int inputRacingCountByUser() {
+        System.out.println(INPUT_RACING_COUNTS);
+        return SCANNER.nextInt();
     }
 
     private void checkRacingCount(int racingCount) {
@@ -89,11 +87,16 @@ public class InputView {
         }
     }
 
-    private void throwInvalidRacingCountMinimumException() {
-        throw new IllegalArgumentException(ErrorCode.getInvalidRacingCountMinimum());
+    private void printRacingCountExceptionMessage(IllegalArgumentException exception) {
+        System.out.println(getExceptionMessage(exception));
+        System.out.println();
     }
 
     private boolean isNotRacingCountValid(int racingCount) {
-        return racingCount < MIN_RACING_COUNT;
+        return racingCount <= MIN_RACING_COUNT;
+    }
+
+    private void throwInvalidRacingCountMinimumException() {
+        throw new IllegalArgumentException(ErrorCode.getInvalidRacingCountMinimum());
     }
 }
