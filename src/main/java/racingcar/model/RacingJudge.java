@@ -13,7 +13,6 @@ public class RacingJudge {
         this.winnerStrategy = winnerStrategy;
     }
 
-    //가장 전진을 많이 한 자동차를 찾아냄
     public List<String> findWinner() {
         return winnerStrategy.findWinnerCarNames(cars);
     }

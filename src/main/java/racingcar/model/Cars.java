@@ -49,19 +49,16 @@ public class Cars {
         cars.forEach(Car::move);
     }
 
-    //경주 결과를 CarDto로 받음
     public List<CarDto> getRacingResult() {
         return cars.stream()
                 .map(Car::getCars)
                 .collect(Collectors.toList());
     }
 
-    //우승자 찾기
     public List<String> findWinner(RacingJudge racingJudge) {
         return racingJudge.findWinner();
     }
 
-    //가장 많은 포지션 카운트 필터링
     public int maxForwordPositionCount() {
         return cars.stream()
                 .mapToInt(Car::getPosition)
