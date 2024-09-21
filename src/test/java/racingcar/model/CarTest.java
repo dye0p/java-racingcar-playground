@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import racingcar.model.util.CustomNumberGenerator;
 
 class CarTest {
 
@@ -11,11 +12,11 @@ class CarTest {
     @Test
     void move() {
         //given
-        Car car = new Car("dyeop");
-        int randomNumber = 4;
+        int boundaryNumber = 4;
+        Car car = new Car("car", new CustomNumberGenerator(boundaryNumber));
 
         //when
-        car.move(randomNumber);
+        car.move();
 
         //then
         int position = car.getPosition();
@@ -27,11 +28,11 @@ class CarTest {
     @Test
     void notMove() {
         //given
-        Car car = new Car("dyeop");
-        int randomNumber = 3;
+        int boundaryNumber = 3;
+        Car car = new Car("car", new CustomNumberGenerator(boundaryNumber));
 
         //when
-        car.move(randomNumber);
+        car.move();
 
         //then
         int position = car.getPosition();

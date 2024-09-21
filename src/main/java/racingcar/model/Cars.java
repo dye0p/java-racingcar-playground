@@ -1,32 +1,30 @@
 package racingcar.model;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 import racingcar.exception.ErrorCode;
-import racingcar.model.util.RandomNumberCreator;
 
 public class Cars {
 
-    private List<Car> cars;
+    private final List<Car> cars;
 
-    protected Cars(String[] carNames) {
-        validateDuplicateCarName(carNames);
-        createCars(carNames);
+    protected Cars(List<Car> cars) {
+        validateDuplicateCarName(cars);
+        this.cars = cars;
     }
 
-    public static Cars create(String[] craNames) {
+    public static Cars create(List<Car> craNames) {
         return new Cars(craNames);
     }
 
-    private void validateDuplicateCarName(String[] carNames) {
+    private void validateDuplicateCarName(List<Car> carNames) {
         HashSet<String> hashSet = new HashSet<>();
         checkForDuplicateCarNames(carNames, hashSet);
     }
 
-    private void checkForDuplicateCarNames(String[] carNames, HashSet<String> hashSet) {
-        Arrays.stream(carNames)
+    private void checkForDuplicateCarNames(List<Car> carNames, HashSet<String> hashSet) {
+        carNames.stream()
+                .map(Car::getName)
                 .forEach(carName -> checkAndThrowIfDuplicateCarName(carName, hashSet));
     }
 
@@ -45,18 +43,8 @@ public class Cars {
         throw new IllegalArgumentException(ErrorCode.getDuplicateCarName());
     }
 
-    private void createCars(String[] carNames) {
-        cars = Arrays.stream(carNames)
-                .map(Car::new)
-                .collect(Collectors.toList());
-    }
-
     public void moving() {
-        cars.forEach(car -> car.move(createRandomNumber()));
-    }
-
-    private int createRandomNumber() {
-        return new RandomNumberCreator().createRandomNubmer();
+        cars.forEach(Car::move);
     }
 
     public List<Car> getRacingResult() {

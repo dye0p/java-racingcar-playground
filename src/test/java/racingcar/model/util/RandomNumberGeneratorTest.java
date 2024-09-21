@@ -6,23 +6,23 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class RandomNumberCreatorTest {
+class RandomNumberGeneratorTest {
 
-    private RandomNumberCreator randomNumberCreator;
+    private RandomNumberGenerator randomNumberGenerator;
 
     @BeforeEach
     void setUp() {
-        randomNumberCreator = new RandomNumberCreator();
+        randomNumberGenerator = new RandomNumberGenerator();
     }
 
     @DisplayName("0 부터 9 까지의 난수 한자리를 생성한다.")
     @Test
     void createRandomNubmer() {
         //given //when
-        int randomNubmer = randomNumberCreator.createRandomNubmer();
+        int number = randomNumberGenerator.createRandomNumber();
 
         //then
-        assertThat(randomNubmer).isBetween(0, 9);
+        assertThat(number).isBetween(0, 9);
     }
 
 }

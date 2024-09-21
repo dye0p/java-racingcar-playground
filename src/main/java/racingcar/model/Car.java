@@ -1,5 +1,8 @@
 package racingcar.model;
 
+import racingcar.model.util.NumberGenerator;
+import racingcar.model.util.RandomNumberGenerator;
+
 public class Car {
 
     public static final int ONE_PORWORD = 1;
@@ -8,24 +11,41 @@ public class Car {
 
     private final String name;
     private int position;
+    private final NumberGenerator randomNumberGenerator;
 
-    public Car(String name) {
+    protected Car(String name, NumberGenerator randomNumberGenerator) {
         this.name = name;
         this.position = SET_POSITION;
+        this.randomNumberGenerator = randomNumberGenerator;
     }
 
-    public void move(int randomNumber) {
-        if (isMovable(randomNumber)) {
+    public static Car create(String name, RandomNumberGenerator randomNumberGenerator) {
+        return new Car(name, randomNumberGenerator);
+    }
+
+    protected Car(String name) {
+        this.name = name;
+        this.position = SET_POSITION;
+        this.randomNumberGenerator = this::createRandomNumber;
+    }
+
+    public void move() {
+        if (isMovable()) {
             carForword();
         }
     }
 
-    private void carForword() {
-        this.position += ONE_PORWORD;
+    private boolean isMovable() {
+        int randomNumber = createRandomNumber();
+        return randomNumber >= MIN_NUMBER_RANGE;
     }
 
-    private boolean isMovable(int randomNumber) {
-        return randomNumber >= MIN_NUMBER_RANGE;
+    private int createRandomNumber() {
+        return randomNumberGenerator.createRandomNumber();
+    }
+
+    private void carForword() {
+        this.position += ONE_PORWORD;
     }
 
     public String getName() {
