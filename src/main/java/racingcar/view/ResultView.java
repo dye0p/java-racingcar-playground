@@ -1,40 +1,64 @@
 package racingcar.view;
 
 import java.util.List;
+import java.util.stream.IntStream;
 import racingcar.model.Car;
 
 public class ResultView {
 
+    private static final String RACING_RESULT_MESSAGE = "실행 결과";
+    private static final String RACING_WINNER_MESSAGE = "가 최종 우승했습니다.";
+    private static final String NAME_POSITION_DELIMITER = " : ";
+    private static final String POSITION_INDICATOR = "-";
+    private static final String COMMA = ", ";
+
     public void racingResultInformation() {
+        oneLineSpace();
+        System.out.println(RACING_RESULT_MESSAGE);
+    }
+
+    private void oneLineSpace() {
         System.out.println();
-        System.out.println("실행 결과");
     }
 
     public void racingResult(List<Car> result) {
-        StringBuilder sb;
-        for (int i = 0; i < result.size(); i++) {
-            sb = new StringBuilder();
-            int position = result.get(i).getPosition();
-            for (int j = 0; j < position; j++) {
-                sb.append("-");
-            }
-            System.out.println(result.get(i).getName() + " : " + sb);
-        }
-        System.out.println();
+        result.forEach(car -> {
+            StringBuilder sb = new StringBuilder();
+            appendByPositionCount(car, sb);
+
+            printRacingResult(car, sb);
+        });
+        oneLineSpace();
+    }
+
+    private void appendByPositionCount(Car car, StringBuilder sb) {
+        IntStream.range(0, car.getPosition())
+                .forEach(position -> sb.append(POSITION_INDICATOR));
+    }
+
+    private void printRacingResult(Car car, StringBuilder sb) {
+        System.out.println(car.getName() + NAME_POSITION_DELIMITER + sb);
     }
 
     public void resultWinner(List<Car> winners) {
-
         StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < winners.size() - 1; i++) {
-            String winner = winners.get(i).getName();
-            sb.append(winner).append(", ");
+        for (Car winner : winners) {
+            appendByWinnerName(winner, sb);
         }
+        appendByLastWinnerName(winners, sb);
 
-        String lastWinner = winners.get(winners.size() -1).getName();
-        sb.append(lastWinner);
+        printRacingWinner(sb);
+    }
 
-        System.out.println(sb + "가 최종 우승했습니다.");
+    private void appendByWinnerName(Car winner, StringBuilder sb) {
+        sb.append(winner.getName()).append(COMMA);
+    }
+
+    private void appendByLastWinnerName(List<Car> winners, StringBuilder sb) {
+        sb.append(winners.get(winners.size() - 1).getName());
+    }
+
+    private void printRacingWinner(StringBuilder sb) {
+        System.out.println(sb + RACING_WINNER_MESSAGE);
     }
 }
