@@ -19,14 +19,14 @@ public class Car {
         this.randomNumberGenerator = randomNumberGenerator;
     }
 
-    public static Car create(String name, RandomNumberGenerator randomNumberGenerator) {
-        return new Car(name, randomNumberGenerator);
-    }
-
     protected Car(String name) {
         this.name = name;
         this.position = SET_POSITION;
         this.randomNumberGenerator = this::createRandomNumber;
+    }
+
+    public static Car create(String name, RandomNumberGenerator randomNumberGenerator) {
+        return new Car(name, randomNumberGenerator);
     }
 
     public void move() {
