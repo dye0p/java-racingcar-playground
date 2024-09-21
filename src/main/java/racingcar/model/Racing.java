@@ -49,7 +49,10 @@ public class Racing {
     }
 
     public List<String> winner() {
-        RacingJudge racingJudge = new RacingJudge(cars, new MaxForwordPositionStretegy());
-        return cars.findWinner(racingJudge);
+        return cars.findWinner(createRacingJudge());
+    }
+
+    private RacingJudge createRacingJudge() {
+        return RacingJudge.create(cars, new MaxForwordPositionStretegy());
     }
 }
