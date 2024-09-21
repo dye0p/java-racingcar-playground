@@ -5,7 +5,6 @@ import java.util.Scanner;
 import racingcar.exception.ErrorCode;
 
 public class InputView {
-    private static final Scanner SCANNER = new Scanner(System.in);
     private static final String SPLIT_PATTERN = ",";
     private static final String INPUT_CARS = "경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).";
     private static final String INPUT_RACING_COUNTS = "시도할 회수는 몇회인가요?";
@@ -13,12 +12,13 @@ public class InputView {
     private static final int MAX_CARNAME_LENGTH = 5;
 
     public String[] inputCarNames() {
-        return inputCarNameAndValidateLengthName();
+        Scanner scanner = new Scanner(System.in);
+        return inputCarNameAndValidateLengthName(scanner);
     }
 
-    private String[] inputCarNameAndValidateLengthName() {
+    private String[] inputCarNameAndValidateLengthName(Scanner sc) {
         while (true) {
-            String[] carNames = inputCarNamesByUser();
+            String[] carNames = inputCarNamesByUser(sc);
             try {
                 validCarNames(carNames);
                 return carNames;
@@ -28,13 +28,13 @@ public class InputView {
         }
     }
 
-    private String[] inputCarNamesByUser() {
+    private String[] inputCarNamesByUser(Scanner sc) {
         System.out.println(INPUT_CARS);
-        return inputSplit();
+        return inputSplit(sc);
     }
 
-    private String[] inputSplit() {
-        return InputView.SCANNER.nextLine().split(SPLIT_PATTERN);
+    private String[] inputSplit(Scanner sc) {
+        return sc.nextLine().split(SPLIT_PATTERN);
     }
 
     private void validCarNames(String[] carNames) {
@@ -61,12 +61,13 @@ public class InputView {
     }
 
     public int inputRacingCount() {
-        return inputAndValidateRacingCount();
+        Scanner sc = new Scanner(System.in);
+        return inputAndValidateRacingCount(sc);
     }
 
-    private int inputAndValidateRacingCount() {
+    private int inputAndValidateRacingCount(Scanner sc) {
         while (true) {
-            int racingCount = inputRacingCountByUser();
+            int racingCount = inputRacingCountByUser(sc);
             try {
                 checkRacingCount(racingCount);
                 return racingCount;
@@ -76,9 +77,9 @@ public class InputView {
         }
     }
 
-    private int inputRacingCountByUser() {
+    private int inputRacingCountByUser(Scanner sc) {
         System.out.println(INPUT_RACING_COUNTS);
-        return SCANNER.nextInt();
+        return sc.nextInt();
     }
 
     private void checkRacingCount(int racingCount) {
