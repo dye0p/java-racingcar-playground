@@ -9,12 +9,15 @@ import racingcar.model.util.winnerstrategy.MaxForwordPositionStretegy;
 
 public class Racing {
 
+    public static final int ONE_COUNT = 1;
+    public static final int MIN_RACNIG_COUNT = 0;
+
     private final Cars cars;
     private int racingCount;
 
     protected Racing(String[] carNames, int racingCount) {
-        List<Car> cars = convertToCarList(carNames);
-        this.cars = Cars.create(cars);
+        List<Car> carList = convertToCarList(carNames);
+        this.cars = Cars.create(carList);
         this.racingCount = racingCount;
     }
 
@@ -30,11 +33,15 @@ public class Racing {
 
     public void racing() {
         cars.moving();
-        racingCount--;
+        deductRacingCount();
+    }
+
+    private void deductRacingCount() {
+        racingCount -= ONE_COUNT;
     }
 
     public boolean isTryRacing() {
-        return racingCount > 0;
+        return racingCount > MIN_RACNIG_COUNT;
     }
 
     public List<CarDto> currentRacingResult() {
