@@ -1,8 +1,8 @@
 package racingcar.controller;
 
 import java.util.List;
-import racingcar.model.Car;
 import racingcar.model.Racing;
+import racingcar.model.dto.CarDto;
 import racingcar.view.InputView;
 import racingcar.view.ResultView;
 
@@ -48,13 +48,13 @@ public class RacingGameController {
         resultView.racingResultInformation();
         while (racing.isTryRacing()) {
             racing.racing();
-            List<Car> cars = racing.racingResult();
+            List<CarDto> cars = racing.currentRacingResult();
             resultView.racingResult(cars);
         }
     }
 
     public void racingWinner() {
-        List<Car> winners = racing.winner();
+        List<String> winners = racing.winner();
         resultView.resultWinner(winners);
     }
 }

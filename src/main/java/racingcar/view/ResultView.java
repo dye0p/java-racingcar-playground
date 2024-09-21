@@ -2,7 +2,7 @@ package racingcar.view;
 
 import java.util.List;
 import java.util.stream.IntStream;
-import racingcar.model.Car;
+import racingcar.model.dto.CarDto;
 
 public class ResultView {
 
@@ -21,7 +21,7 @@ public class ResultView {
         System.out.println();
     }
 
-    public void racingResult(List<Car> result) {
+    public void racingResult(List<CarDto> result) {
         result.forEach(car -> {
             StringBuilder sb = new StringBuilder();
             appendByPositionCount(car, sb);
@@ -31,31 +31,29 @@ public class ResultView {
         oneLineSpace();
     }
 
-    private void appendByPositionCount(Car car, StringBuilder sb) {
+    private void appendByPositionCount(CarDto car, StringBuilder sb) {
         IntStream.range(0, car.getPosition())
                 .forEach(position -> sb.append(POSITION_INDICATOR));
     }
 
-    private void printRacingResult(Car car, StringBuilder sb) {
+    private void printRacingResult(CarDto car, StringBuilder sb) {
         System.out.println(car.getName() + NAME_POSITION_DELIMITER + sb);
     }
 
-    public void resultWinner(List<Car> winners) {
+    public void resultWinner(List<String> winners) {
         StringBuilder sb = new StringBuilder();
-        for (Car winner : winners) {
+        for (String winner : winners) {
+
+            if (winner.equals(winners.get(winners.size() - 1))) {
+                sb.append(winner);
+                printRacingWinner(sb);
+            }
             appendByWinnerName(winner, sb);
         }
-        appendByLastWinnerName(winners, sb);
-
-        printRacingWinner(sb);
     }
 
-    private void appendByWinnerName(Car winner, StringBuilder sb) {
-        sb.append(winner.getName()).append(COMMA);
-    }
-
-    private void appendByLastWinnerName(List<Car> winners, StringBuilder sb) {
-        sb.append(winners.get(winners.size() - 1).getName());
+    private void appendByWinnerName(String winner, StringBuilder sb) {
+        sb.append(winner).append(COMMA);
     }
 
     private void printRacingWinner(StringBuilder sb) {

@@ -2,7 +2,9 @@ package racingcar.model;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 import racingcar.exception.ErrorCode;
+import racingcar.model.dto.CarDto;
 
 public class Cars {
 
@@ -47,12 +49,30 @@ public class Cars {
         cars.forEach(Car::move);
     }
 
-    public List<Car> getRacingResult() {
-        return cars;
+    //경주 결과를 CarDto로 받음
+    public List<CarDto> getRacingResult() {
+        return cars.stream()
+                .map(Car::getCars)
+                .collect(Collectors.toList());
     }
 
-    public List<Car> findWinner() {
-        RacingJudge racingJudge = new RacingJudge();
-        return racingJudge.findWinner(cars);
+    //우승자 찾기
+    public List<String> findWinner(RacingJudge racingJudge) {
+        return racingJudge.findWinner();
+    }
+
+    //가장 많은 포지션 카운트 필터링
+    public int maxForwordPositionCount() {
+        return cars.stream()
+                .mapToInt(Car::getPosition)
+                .max()
+                .orElse(0);
+    }
+
+    public List<String> compareCarPositions(int maxForwordPositionCount) {
+        return cars.stream()
+                .filter(car -> car.hasPositionCountOf(maxForwordPositionCount))
+                .map(Car::getName)
+                .collect(Collectors.toList());
     }
 }

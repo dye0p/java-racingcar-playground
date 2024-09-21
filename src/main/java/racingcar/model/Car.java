@@ -1,7 +1,7 @@
 package racingcar.model;
 
-import racingcar.model.util.NumberGenerator;
-import racingcar.model.util.RandomNumberGenerator;
+import racingcar.model.dto.CarDto;
+import racingcar.model.util.numbergenerator.NumberGenerator;
 
 public class Car {
 
@@ -19,13 +19,13 @@ public class Car {
         this.randomNumberGenerator = randomNumberGenerator;
     }
 
-    protected Car(String name) {
+    protected Car(String name, int position) {
         this.name = name;
-        this.position = SET_POSITION;
+        this.position = position;
         this.randomNumberGenerator = this::createRandomNumber;
     }
 
-    public static Car create(String name, RandomNumberGenerator randomNumberGenerator) {
+    public static Car create(String name, NumberGenerator randomNumberGenerator) {
         return new Car(name, randomNumberGenerator);
     }
 
@@ -54,5 +54,13 @@ public class Car {
 
     public int getPosition() {
         return this.position;
+    }
+
+    public CarDto getCars() {
+        return CarDto.create(this.name, this.position);
+    }
+
+    public boolean hasPositionCountOf(int maxPositionCount) {
+        return this.position == maxPositionCount;
     }
 }

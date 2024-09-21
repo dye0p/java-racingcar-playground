@@ -3,7 +3,9 @@ package racingcar.model;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import racingcar.model.util.RandomNumberGenerator;
+import racingcar.model.dto.CarDto;
+import racingcar.model.util.numbergenerator.RandomNumberGenerator;
+import racingcar.model.util.winnerstrategy.MaxForwordPositionStretegy;
 
 public class Racing {
 
@@ -35,11 +37,12 @@ public class Racing {
         return racingCount > 0;
     }
 
-    public List<Car> racingResult() {
+    public List<CarDto> currentRacingResult() {
         return cars.getRacingResult();
     }
 
-    public List<Car> winner() {
-        return cars.findWinner();
+    public List<String> winner() {
+        RacingJudge racingJudge = new RacingJudge(cars, new MaxForwordPositionStretegy());
+        return cars.findWinner(racingJudge);
     }
 }

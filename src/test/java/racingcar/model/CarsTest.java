@@ -7,7 +7,8 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import racingcar.exception.ErrorCode;
-import racingcar.model.util.CustomNumberGenerator;
+import racingcar.model.util.numbergenerator.CustomNumberGenerator;
+import racingcar.model.util.winnerstrategy.MaxForwordPositionStretegy;
 
 class CarsTest {
 
@@ -16,9 +17,10 @@ class CarsTest {
     void create() {
         //given
         List<Car> cars = List.of(
-                new Car("car1"),
-                new Car("car1"),
-                new Car("car3"));
+                new Car("car1", 1),
+                new Car("car1", 1),
+                new Car("car3", 1)
+        );
 
         //when //then
         assertThatThrownBy(() -> Cars.create(cars))
@@ -41,9 +43,27 @@ class CarsTest {
         cars.moving();
 
         //when
-        List<Car> winner = cars.findWinner();
+        List<String> winner = cars.findWinner(new RacingJudge(cars, new MaxForwordPositionStretegy()));
 
         //then
         assertThat(winner).hasSize(2);
+    }
+
+
+    @DisplayName("가장 많이 전진한 자동차의 전진값을 반환한다.")
+    @Test
+    void getMaxForword() {
+        //given
+        Car car1 = new Car("car1", 5);
+        Car car2 = new Car("car2", 2);
+        Car car3 = new Car("car3", 1);
+
+        Cars cars = Cars.create(List.of(car1, car2, car3));
+
+        //when
+        int result = cars.maxForwordPositionCount();
+
+        //then
+        assertThat(result).isEqualTo(5);
     }
 }

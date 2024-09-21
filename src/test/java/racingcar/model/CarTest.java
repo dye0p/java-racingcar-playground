@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import racingcar.model.util.CustomNumberGenerator;
-import racingcar.model.util.RandomNumberGenerator;
+import racingcar.model.util.numbergenerator.CustomNumberGenerator;
+import racingcar.model.util.numbergenerator.RandomNumberGenerator;
 
 class CarTest {
 
@@ -49,6 +49,20 @@ class CarTest {
         int position = car.getPosition();
 
         assertThat(position).isEqualTo(0);
+    }
+
+    @DisplayName("현재 포지션 값이 비교하려는 포지션 값과 같다면 true 반환")
+    @Test
+    void hasPositionCountOf() {
+        //given
+        Car car = new Car("car1", 3);
+        int maxPositionCount = 3;
+
+        //when
+        boolean result = car.hasPositionCountOf(maxPositionCount);
+
+        //then
+        assertThat(result).isTrue();
     }
 
 }
