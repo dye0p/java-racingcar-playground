@@ -7,7 +7,6 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import racingcar.exception.ErrorCode;
-import racingcar.model.util.numbergenerator.CustomNumberGenerator;
 import racingcar.model.util.winnerstrategy.MaxForwordPositionStretegy;
 
 class CarsTest {
@@ -32,9 +31,9 @@ class CarsTest {
     @Test
     void findMostMovedCar() {
         //given
-        Car car1 = new Car("car1", new CustomNumberGenerator(5));
-        Car car2 = new Car("car2", new CustomNumberGenerator(4));
-        Car car3 = new Car("car3", new CustomNumberGenerator(3));
+        Car car1 = new Car("car1", () -> 5);
+        Car car2 = new Car("car2", () -> 4);
+        Car car3 = new Car("car3", () -> 3);
 
         List<Car> carsName = List.of(car1, car2, car3);
 

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import racingcar.model.Car;
 import racingcar.model.Cars;
-import racingcar.model.util.numbergenerator.CustomNumberGenerator;
 
 class MaxForwordPositionStretegyTest {
 
@@ -19,9 +18,9 @@ class MaxForwordPositionStretegyTest {
         //given
 
         //자동차 생성
-        Car car1 = Car.create("car1", new CustomNumberGenerator(5));
-        Car car2 = Car.create("car2", new CustomNumberGenerator(4));
-        Car car3 = Car.create("car3", new CustomNumberGenerator(0));
+        Car car1 = Car.create("car1", () -> 5);
+        Car car2 = Car.create("car2", () -> 4);
+        Car car3 = Car.create("car3", () -> 0);
 
         //전진
         car1.move();
